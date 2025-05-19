@@ -1,0 +1,36 @@
+# .gitignore 파일
+
+# 환경 변수 및 API 키
+.env
+
+# 가상 환경
+venv/
+env/
+.venv/
+.python-version
+
+# 캐시 파일
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 빌드 디렉토리
+dist/
+build/
+*.egg-info/
+
+# IDE 설정
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 로그 파일
+*.log
+
+# 시스템 파일
+.DS_Store
+Thumbs.db

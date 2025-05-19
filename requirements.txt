@@ -1,0 +1,12 @@
+langchain
+langchain-openai
+langchain_teddynote
+pypdf
+langchain_experimental
+langchain-core
+langchain-community
+langgraph
+langchain-opentutorial
+pdfplumber
+faiss-cpu
+python-dotenv

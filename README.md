@@ -1,61 +1,73 @@
-# skala-ai-service-mini-project
+# AI 윤리 평가 시스템
+본 프로젝트는 AI 윤리 평가 에이전트를 설계하고 구현한 실습 프로젝트입니다.
 
-AI 윤리 평가 시스템
-AI 서비스의 윤리적 평가를 자동화하기 위한 시스템입니다. 이 시스템은 AI 서비스 설명을 입력으로 받아 윤리적 리스크를 평가하고, 개선 방안을 제안하는 최종 보고서를 생성합니다.
-주요 기능
+## Overview
+- Objective : AI 서비스의 윤리적 리스크를 평가하고 개선 방안을 제시하는 자동화된 시스템 구축
+- Methods : RAG(Retrieval-Augmented Generation), Multi-agent Workflow, LLM Chain
+- Tools : Web Search, PDF Analysis, Vector Embedding
 
-서비스 정보 수집 및 분석
-AI 윤리 가이드라인 기반 리스크 평가
-윤리적 리스크 개선 방안 제안
-종합 평가 보고서 생성
+## Features
+- AI 서비스 설명을 입력으로 받아 윤리적 리스크 평가 보고서 자동 생성
+- 서비스 정보 검색, 분석, 리스크 평가, 개선안 제안의 완전한 워크플로우 제공
+- AI 윤리 가이드라인 기반 데이터 검색 및 활용(RAG)
 
-설치 방법
+## Tech Stack 
+| Category   | Details                      |
+|------------|------------------------------|
+| Framework  | LangGraph, LangChain, Python |
+| LLM        | GPT-4, GPT-3.5-Turbo via OpenAI API |
+| Retrieval  | FAISS, RAG                  |
+| Embedding  | OpenAI Text Embedding       |
+| Search     | Tavily Search API           |
 
-저장소 클론
+## Agents
+ 
+- Service Info Agent: 서비스 정보 수집 및 분석
+- Risk Assessment Agent: 윤리적 리스크 평가
+- Improvement Agent: 개선 방안 제안
+- Report Generation Agent: 최종 보고서 생성
 
-bashgit clone https://github.com/your-username/ai-ethics-evaluation.git
-cd ai-ethics-evaluation
+## State 
+- service_description : AI 서비스에 대한 초기 설명 텍스트
+- context : 웹 검색을 통해 수집된 서비스 관련 정보
+- service_info : 서비스 분석 결과 (JSON 구조)
+- risk_assessment : 윤리적 리스크 평가 결과 (JSON 구조)
+- improvement_suggestions : 개선 제안 결과 (JSON 구조)
+- final_report : 최종 생성된 마크다운 형식의 보고서
+- messages : 워크플로우 진행 중 생성된 메시지 기록
+- next : 다음 실행할 노드 이름
 
-가상 환경 생성 및 활성화
+## Architecture
+![architecture-diagram-perfect](https://github.com/user-attachments/assets/87a8dbf0-3e63-44df-bf83-3bfbf4dee7a4)
 
-bashpython -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+## Directory Structure
+```
+ai_ethics_evaluation/
+├── data/                  # AI 윤리 가이드라인 PDF
+│   └── Research_on_AI_Ethics_Guidelines.pdf
+├── config/                # 설정 파일
+│   ├── __init__.py
+│   └── logging_config.py  # 로깅 설정
+├── src/                   # 소스 코드
+│   ├── __init__.py
+│   ├── types.py           # 타입 정의
+│   ├── retrieval/         # PDF 검색 관련 기능
+│   │   ├── __init__.py
+│   │   └── pdf_retriever.py
+│   ├── nodes/             # 워크플로우 노드
+│   │   ├── __init__.py
+│   │   ├── service_info.py    # 서비스 정보 검색 노드
+│   │   ├── analysis.py        # 서비스 분석 노드
+│   │   ├── risk.py            # 윤리적 리스크 평가 노드
+│   │   ├── improvement.py     # 개선안 제안 노드
+│   │   └── report.py          # 보고서 생성 노드
+│   └── workflow/          # 워크플로우 그래프
+│       ├── __init__.py
+│       └── graph.py       # 워크플로우 그래프 구성
+├── main.py                # 메인 실행 스크립트
+├── requirements.txt       # 필요한 패키지 목록
+└── README.md
+```
 
-필요 패키지 설치
-
-bashpip install -r requirements.txt
-
-.env 파일 생성 및 API 키 설정
-
-OPENAI_API_KEY=your_openai_api_key
-LANGCHAIN_API_KEY=your_langchain_api_key
-TAVILY_API_KEY=your_tavily_api_key
-사용 방법
-bashpython main.py "AI 서비스 설명"
-또는 Python 코드에서:
-pythonfrom src.workflow.graph import evaluate_ai_service_ethics
-
-service_description = """
-ZestAI는 금융 기관을 위한 신용 평가 및 대출 결정 AI 시스템으로, 전통적인 신용 점수 외에도
-수천 가지 데이터 포인트를 활용하여 더 정확하고 공정한 대출 심사를 제공합니다.
-이 플랫폼은 금융 포용성을 높이고 비전통적인 신용 이력을 가진 사람들에게도
-공정한 금융 접근성을 제공하는 것을 목표로 합니다.
-"""
-
-result = evaluate_ai_service_ethics(service_description)
-print(result["final_report"])
-프로젝트 구조
-
-main.py: 메인 실행 파일
-src/: 소스 코드
-
-retrieval/: PDF 문서 검색 기능
-nodes/: 워크플로우 노드 구현
-workflow/: 전체 워크플로우 그래프
-
-
-data/: 데이터 파일 (AI 윤리 가이드라인 PDF)
-config/: 설정 파일
-
-라이센스
-MIT
+## Contributors 
+- 김하림 : Prompt Engineering, Agent Design, Architecture, RAG Implementation

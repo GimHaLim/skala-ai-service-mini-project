@@ -21,7 +21,6 @@
 | Search     | Tavily Search API           |
 
 ## Agents
- 
 - Service Info Agent: 서비스 정보 수집 및 분석
 - Risk Assessment Agent: 윤리적 리스크 평가
 - Improvement Agent: 개선 방안 제안
@@ -65,6 +64,7 @@ ai_ethics_evaluation/
 │       ├── __init__.py
 │       └── graph.py       # 워크플로우 그래프 구성
 ├── main.py                # 메인 실행 스크립트
+├── reports/               # 생성된 보고서 저장 디렉토리
 ├── requirements.txt       # 필요한 패키지 목록
 └── README.md
 ```
